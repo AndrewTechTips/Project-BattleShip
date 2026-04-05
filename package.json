@@ -1,0 +1,34 @@
+{
+  "name": "project-battleship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewTechTips/Project-BattleShip.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AndrewTechTips/Project-BattleShip/issues"
+  },
+  "homepage": "https://github.com/AndrewTechTips/Project-BattleShip#readme",
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "babel-jest": "^30.3.0",
+    "css-loader": "^7.1.4",
+    "html-webpack-plugin": "^5.6.6",
+    "jest": "^30.3.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.105.4",
+    "webpack-cli": "^7.0.2",
+    "webpack-dev-server": "^5.2.3"
+  }
+}
