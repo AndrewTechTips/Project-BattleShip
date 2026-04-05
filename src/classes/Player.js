@@ -4,7 +4,7 @@ export default class Player {
     constructor(name, type = "real") {
         this.name = name;
         this.type = type;   // real or computer
-        this.Gameboard = new Gameboard();
+        this.gameboard = new Gameboard();
     }
 
     // player attack
@@ -21,7 +21,7 @@ export default class Player {
         let row, col , result;
         do {
             row = Math.floor(Math.random() * 10);
-            row = Math.floor(Math.random() * 10);
+            col = Math.floor(Math.random() * 10);
             result = enemyBoard.receiveAttack(row, col);
         } while (result === "already_attacked");
 
