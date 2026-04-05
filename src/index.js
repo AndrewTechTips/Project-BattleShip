@@ -40,10 +40,10 @@ const handleAttack = (e) => {
     document.getElementById("computer-board").classList.add("disabled");
 
     setTimeout( () => {
-        computer.randomAttack(player.gameboard());
+        computer.randomAttack(player.gameboard);
         updateScreen();
 
-        if (player.gameboard.areAllShipsSunk()){
+        if (player.gameboard.areAllShipsSunk()) {
             updateStatus("DISASTER! The enemy has destroyed your fleet!");
             return;
         }
