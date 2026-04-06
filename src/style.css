@@ -119,3 +119,86 @@ h1 {
     transform: translate(-50%, -50%);
     color: var(--text-light);
 }
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+button {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid var(--neon-blue);
+    color: var(--text-light);
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(5px);
+}
+
+button:hover:not(:disabled) {
+    background: var(--neon-blue);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px var(--neon-blue), 0 0 30px rgba(56, 189, 248, 0.5);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    border-color: #334155;
+    color: #64748b;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+button.primary {
+    border-color: var(--neon-red);
+}
+
+button.primary:hover:not(:disabled) {
+    background: var(--neon-red);
+    box-shadow: 0 0 15px var(--neon-red), 0 0 30px rgba(239, 68, 68, 0.5);
+}
+
+.fleet {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 2rem;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.ship-draggable {
+    display: flex;
+    cursor: grab;
+    background-color: rgba(148, 163, 184, 0.8);
+    border: 1px solid #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+}
+
+.ship-draggable:active {
+    cursor: grabbing;
+    transform: scale(1.05);
+}
+
+.ship-draggable.vertical {
+    flex-direction: column;
+}
+
+.ship-segment {
+    width: 35px;
+    height: 35px;
+    border: 1px solid rgba(0,0,0,0.3);
+}
+
+.drag-over {
+    background-color: rgba(56, 189, 248, 0.4) !important;
+}
