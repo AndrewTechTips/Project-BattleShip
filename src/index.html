@@ -10,8 +10,19 @@
     <body>
         <header>
             <h1>BattleShip</h1>
-            <p id="status-display">The game has begun. It's your turn, attack the enemy</p>
+            <p id="status-display">Place your fleet, Commander.</p>
         </header>
+
+        <div class="controls">
+            <button id="rotate-btn">Rotate Ships: Horizontal</button>
+            <button id="randomize-btn">Randomize Fleet</button>
+            <button id="start-game-btn" class="primary" disabled>Start Game</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+
+        <div id="fleet-container" class="fleet">
+
+        </div>
         
         <main class="game-container">
             <div class="player-section">
@@ -21,7 +32,7 @@
 
             <div class="player-section">
                 <h2>Enemy</h2>
-                <div id="computer-board" class="board"></div>
+                <div id="computer-board" class="board disabled"></div>
             </div>
         </main>
 
