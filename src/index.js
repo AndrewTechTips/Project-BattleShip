@@ -60,35 +60,32 @@ const handleAttack = (e) => {
     const col = parseInt(e.target.dataset.col);
 
     const attackResult = player.attack(computer.gameboard, row, col);
-
     if (attackResult === "already_attacked") return;
 
     updateScreen();
 
     if (computer.gameboard.areAllShipsSunk()) {
         updateStatus("VICTORY! Enemy fleet destroyed!");
-        document.getElementById("computer-board").classList.add("disabled");
+        computerBoardDiv.classList.add("disabled");
         return;
     }
 
-    updateStatus("The enemy is attacking!");
-    document.getElementById("computer-board").classList.add("disabled");
+    updateStatus("Enemy is tracking your fleet...");
+    computerBoardDiv.classList.add("disabled");
 
     setTimeout( () => {
         computer.randomAttack(player.gameboard);
         updateScreen();
 
         if (player.gameboard.areAllShipsSunk()) {
-            updateStatus("DISASTER! The enemy has destroyed your fleet!");
+            updateStatus("DEFEAT! Your fleet was destroyed.");
             return;
         }
 
-        updateStatus("Your turn. Attack!");
-        document.getElementById("computer-board").classList.remove("disabled");
+        updateStatus("Your turn. Fire!");
+        computerBoardDiv.classList.remove("disabled");
 
-    }, 600);
+    }, 800);
 };
 
-document.getElementById("computer-board").addEventListener("click", handleAttack);
-
-updateScreen();
+computerBoardDiv.addEventListener("click", handleAttack);
