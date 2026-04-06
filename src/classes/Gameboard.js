@@ -47,4 +47,43 @@ export default class Gameboard {
 
         return this.ships.every(ship => ship.isSunk());
     }
+
+    reset() {
+        this.board = Array.from({ length: this.size}, () => Array(this.size).fill(null));
+        this.missedAttacks = [];
+        this.ships = [];
+    }
+
+    placeShipRandomly() {
+        this.reset();
+        const shipLengths = [5, 4, 3, 3, 2];
+
+        shipLengths.forEach(length => {
+            let placed = false;
+
+            while(!placed) {
+                const isVertical = Math.random() > 0.5;
+                const row = Math.floor(Math.random() * 10);
+                const col = Math.floor(Math.random() * 10);
+
+                if (this.canPlaceShip(length, row, col, isVertical)) {
+                    this.placeShip(length, row, col, isVertical);
+                    placed = true;
+                }
+            }
+
+        });
+    }
+
+    canPlaceShip(length, row, col, isVertical) {
+        for (let i = 0; i < length; i++) {
+            const r = isVertical ? row + i : row;
+            const c = isVertical ? col : col + i;
+
+            if (r >= 10 || c >= 10 || this.board[r][c] !== null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
