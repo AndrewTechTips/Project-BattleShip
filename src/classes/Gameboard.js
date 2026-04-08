@@ -87,7 +87,7 @@ export default class Gameboard {
             if (r >= 10 || c >= 10 || this.board[r][c] !== null) return false;
         
             for (let dr = -1; dr <= 1; dr++) {
-                for (dc = -1; dc <= 1; dc++) {
+                for (let dc = -1; dc <= 1; dc++) {
                     const checkRow = r + dr;
                     const checkCol = c + dc;
 
