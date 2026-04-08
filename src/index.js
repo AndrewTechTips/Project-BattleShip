@@ -5,6 +5,7 @@ import { initDragAndDrop } from "./dragDrop";
 
 const player = new Player("Player");
 const computer = new Player("CPU", "computer");
+let gameIsRunning = false;
 
 const updateScreen = () => {
     renderBoard("player-board", player.gameboard, false);
@@ -33,15 +34,19 @@ randomizeBtn.addEventListener("click", () => {
 });
 
 // start game
+const controlsContainer = document.querySelector(".controls");
 
 startGameBtn.addEventListener("click", () => {
+    if (gameIsRunning) return;
+
+    computer.gameboard.reset();
     computer.gameboard.placeShipsRandomly();
     updateScreen();
 
     updateStatus("Game started! Good luck, Commander.");
 
     // hide the setup btns 
-    document.querySelector(".controls").computedStyleMap.display = "none";
+    controlsContainer.style.display = "none";    
     computerBoardDiv.classList.remove("disabled");
     resetBtn.style.display = "block";
 });
@@ -54,7 +59,7 @@ resetBtn.addEventListener("click", () => {
 
 
 const handleAttack = (e) => {
-    if (!e.target.classList.contains("cell")) return;
+    if (!e.target.classList.contains("cell") || !gameIsRunning) return;
 
     const row = parseInt(e.target.dataset.row);
     const col = parseInt(e.target.dataset.col);
