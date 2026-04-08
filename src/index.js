@@ -2,6 +2,7 @@ import "./style.css";
 import Player from "./classes/Player";
 import { renderBoard, updateStatus } from "./dom";
 import { initDragAndDrop } from "./dragDrop";
+import { getCpuHitMessage, getCpuMissMessage, getRandomHitMessage, getRandomMissMessage } from "./messages";
 
 const player = new Player("Player");
 const computer = new Player("CPU", "computer");
@@ -69,25 +70,36 @@ const handleAttack = (e) => {
 
     updateScreen();
 
+    if (attackResult === "hit") {
+        updateScreen(getRandomHitMessage());
+    } else {
+        updateStatus(getRandomMissMessage());
+    }
+
     if (computer.gameboard.areAllShipsSunk()) {
         updateStatus("VICTORY! Enemy fleet destroyed!");
+        gameIsRunning = false;
         computerBoardDiv.classList.add("disabled");
         return;
     }
-
-    updateStatus("Enemy is tracking your fleet...");
     computerBoardDiv.classList.add("disabled");
 
     setTimeout( () => {
-        computer.randomAttack(player.gameboard);
+        const cpuMove = computer.randomAttack(player.gameboard);
         updateScreen();
+
+        if (cpuMove.result === "hit") {
+            updateStatus(getCpuHitMessage());
+        } else {
+            updateStatus(getCpuMissMessage());
+        }
 
         if (player.gameboard.areAllShipsSunk()) {
             updateStatus("DEFEAT! Your fleet was destroyed.");
+            gameIsRunning = false;
             return;
         }
 
-        updateStatus("Your turn. Fire!");
         computerBoardDiv.classList.remove("disabled");
 
     }, 800);
