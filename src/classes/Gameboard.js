@@ -54,7 +54,7 @@ export default class Gameboard {
         this.ships = [];
     }
 
-    placeShipRandomly() {
+    placeShipsRandomly() {
         this.reset();
         const shipLengths = [5, 4, 3, 3, 2];
 
