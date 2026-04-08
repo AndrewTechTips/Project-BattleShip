@@ -210,3 +210,15 @@ button.primary:hover:not(:disabled) {
 .drag-over {
     background-color: rgba(56, 189, 248, 0.4) !important;
 }
+
+.counter {
+    font-size: 1rem;
+    color: var(--neon-blue);
+    opacity: 0.8;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+#cpu-counter {
+    color: var(--neon-red);
+}
