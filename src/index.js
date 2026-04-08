@@ -8,12 +8,12 @@ const player = new Player("Player");
 const computer = new Player("CPU", "computer");
 let gameIsRunning = false;
 
-
+const controlsContainer = document.querySelector(".controls");
 const startGameBtn = document.getElementById('start-game-btn');
 const randomizeBtn = document.getElementById('randomize-btn');
 const resetBtn = document.getElementById('reset-btn');
 const computerBoardDiv = document.getElementById('computer-board');
-const fleetContainer = document.getElementById("fleet-container");
+const fleetContainer = document.getElementById('fleet-container');
 
 const updateScreen = () => {
     renderBoard("player-board", player.gameboard, false);
@@ -46,7 +46,7 @@ const resetGameLogic = () => {
     updateScreen();
 
     initDragAndDrop(player, updateScreen, enableStartGame);
-}
+};
 
 resetGameLogic();
 
@@ -60,12 +60,12 @@ randomizeBtn.addEventListener("click", () => {
 });
 
 // start game
-const controlsContainer = document.querySelector(".controls");
 
 startGameBtn.addEventListener("click", () => {
     if (gameIsRunning) return;
-
+    
     gameIsRunning = true;
+
     computer.gameboard.reset();
     computer.gameboard.placeShipsRandomly();
     updateScreen();
