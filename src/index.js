@@ -39,7 +39,8 @@ const controlsContainer = document.querySelector(".controls");
 
 startGameBtn.addEventListener("click", () => {
     if (gameIsRunning) return;
-
+    
+    gameIsRunning = true;
     computer.gameboard.reset();
     computer.gameboard.placeShipsRandomly();
     updateScreen();
