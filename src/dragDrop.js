@@ -1,15 +1,28 @@
 import { renderBoard } from "./dom"
 
+let isVertical = false;
+let draggedShipLength = 0;
+let draggedShipElement = null;
+let shipsToPlace = [];
+let listenersAttached = false;
+
+let currentPlayer = null;
+let onUpdateScreen = null;
+let onEnableStart = null;
+
 export const initDragAndDrop = (player, updateScreenCallback, enableStartGameCallback) => {
+    shipsToPlace = [5, 4, 3, 3, 2];
+    isVertical = false;
+
+    currentPlayer = player;
+    onUpdateScreen = updateScreenCallback;
+    onEnableStart = enableStartGameCallback;
+
     const fleetContainer = document.getElementById("fleet-container");
     const playerBoardElement = document.getElementById("player-board");
     const rotateBtn = document.getElementById("rotate-btn");
 
-    let isVertical = false;
-    let draggedShipLength = 0;
-    let draggedShipElement = null;
-
-    const shipsToPlace = [5, 4, 3, 3, 2];
+    rotateBtn.textContent = "Rotate Ships: Horizontal";
 
     const renderFleet = () => {
         fleetContainer.innerHTML = "";
@@ -41,53 +54,54 @@ export const initDragAndDrop = (player, updateScreenCallback, enableStartGameCal
 
         });
     };
-
-    rotateBtn.addEventListener("click", () => {
-        isVertical = !isVertical;
-        rotateBtn.textContent = `Rotate Ships: ${isVertical ? 'Vertical' : 'Horizontal'}`;
-        renderFleet();
-    });
-
-    playerBoardElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        if (e.target.classList.contains("cell")) {
-            e.target.classList.add("drag-over");
-        }
-    });
-
-    playerBoardElement.addEventListener("dragleave", (e) => {
-        if (e.target.classList.contains("cell")) {
-            e.target.classList.remove("drag-over");
-        }
-    });
-
-    playerBoardElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (e.target.classList.contains("cell")) {
-            e.target.classList.remove("drag-over");
-
-            const row = parseInt(e.target.dataset.row);
-            const col = parseInt(e.target.dataset.col);
-
-            if (player.gameboard.canPlaceShip(draggedShipLength, row, col, isVertical)) {
-                player.gameboard.placeShip(draggedShipLength, row, col, isVertical);
-
-                const shipIndex = parseInt(draggedShipElement.dataset.index);
-                shipsToPlace.splice(shipIndex, 1);
-
-                updateScreenCallback();
-                renderFleet();
-
-                if (shipsToPlace.length === 0) {
-                    fleetContainer.innerHTML = "<h3>All ships placed. Ready for battle!</h3>"
-                    enableStartGameCallback();
-                }
-            } else {
-                console.log("Invalid placement!");
-            }
-        }
-    });
-
+    
     renderFleet();
 
+    if(!listenersAttached) {
+        listenersAttached = true;
+
+        rotateBtn.addEventListener("click", () => {
+            isVertical = !isVertical;
+            rotateBtn.textContent = `Rotate Ships: ${isVertical ? 'Vertical' : 'Horizontal'}`;
+            renderFleet();
+        });
+
+        playerBoardElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            if (e.target.classList.contains("cell")) {
+                e.target.classList.add("drag-over");
+            }
+        });
+
+        playerBoardElement.addEventListener("dragleave", (e) => {
+            if (e.target.classList.contains("cell")) {
+                e.target.classList.remove("drag-over");
+            }
+        });
+
+        playerBoardElement.addEventListener("drop", (e) => {
+            e.preventDefault();
+            if (e.target.classList.contains("cell")) {
+                e.target.classList.remove("drag-over");
+
+                const row = parseInt(e.target.dataset.row);
+                const col = parseInt(e.target.dataset.col);
+
+                if (currentPlayer.gameboard.canPlaceShip(draggedShipLength, row, col, isVertical)) {
+                    currentPlayer.gameboard.placeShip(draggedShipLength, row, col, isVertical);
+
+                    const shipIndex = parseInt(draggedShipElement.dataset.index);
+                    shipsToPlace.splice(shipIndex, 1);
+
+                    onUpdateScreen();
+                    renderFleet();
+
+                    if (shipsToPlace.length === 0) {
+                        fleetContainer.innerHTML = "<h3>All ships placed. Ready for battle!</h3>"
+                        onEnableStart();
+                    }
+                }
+            }
+        });
+    }
 }
