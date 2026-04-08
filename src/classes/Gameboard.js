@@ -75,15 +75,31 @@ export default class Gameboard {
         });
     }
 
+    getAliveShipsCount() {
+        return this.ships.filter(ship => !ship.isSunk()).length;
+    }
+
     canPlaceShip(length, row, col, isVertical) {
         for (let i = 0; i < length; i++) {
             const r = isVertical ? row + i : row;
             const c = isVertical ? col : col + i;
 
-            if (r >= 10 || c >= 10 || this.board[r][c] !== null) {
-                return false;
+            if (r >= 10 || c >= 10 || this.board[r][c] !== null) return false;
+        
+            for (let dr = -1; dr <= 1; dr++) {
+                for (dc = -1; dc <= 1; dc++) {
+                    const checkRow = r + dr;
+                    const checkCol = c + dc;
+
+                    if (checkRow >= 0 && checkRow < 10 && checkCol >= 0 && checkCol < 10) {
+                        if (this.board[checkRow][checkCol] !== null) {
+                            return false;
+                        }
+                    }
+                }
             }
         }
+
         return true;
     }
 }
